@@ -16,7 +16,7 @@ class FirstTest extends TestCase
         $fraction = new Fraction($number);
 
         // WHEN
-        $result = $fraction->getValue();
+        $result = $fraction->getSimplifiedValue();
 
         // THEN
         self::assertEquals($number, $result);
@@ -38,7 +38,7 @@ class FirstTest extends TestCase
         $fraction = new Fraction($numerator, $denominator);
 
         // WHEN
-        $result = $fraction->getValue();
+        $result = $fraction->getSimplifiedValue();
 
         // THEN
         $expectedResult = "3/4";
@@ -56,7 +56,7 @@ class FirstTest extends TestCase
         $fraction = new Fraction($numerator, $denominator);
 
         // WHEN
-        $result = $fraction->getValue();
+        $result = $fraction->getSimplifiedValue();
 
         // THEN
         $expectedResult = "-3/4";
@@ -74,7 +74,7 @@ class FirstTest extends TestCase
         $fraction = new Fraction($numerator, $denominator);
 
         // WHEN
-        $result = $fraction->getValue();
+        $result = $fraction->getSimplifiedValue();
 
         // THEN
         $expectedResult = "-3/4";
@@ -92,7 +92,7 @@ class FirstTest extends TestCase
         $fraction = new Fraction($numerator, $denominator);
 
         // WHEN
-        $result = $fraction->getValue();
+        $result = $fraction->getSimplifiedValue();
 
         // THEN
         $expectedResult = "3/4";
@@ -108,7 +108,7 @@ class FirstTest extends TestCase
         $fraction = new Fraction($numerator, $denominator);
 
         // WHEN
-        $result = $fraction->getValue();
+        $result = $fraction->getSimplifiedValue();
 
         // THEN
         $expectedResult = "2";
@@ -126,7 +126,7 @@ class FirstTest extends TestCase
         $fraction = new Fraction($numerator, $denominator);
 
         // WHEN
-        $result = $fraction->getValue();
+        $result = $fraction->getSimplifiedValue();
     }
 
     /** @test */
@@ -138,7 +138,7 @@ class FirstTest extends TestCase
         $fraction = new Fraction($numerator, $denominator);
 
         // WHEN
-        $result = $fraction->getValue();
+        $result = $fraction->getSimplifiedValue();
 
         // THEN
         $expectedResult = "2";
@@ -155,7 +155,7 @@ class FirstTest extends TestCase
         $fraction = new Fraction($numerator, $denominator);
 
         // WHEN
-        $result = $fraction->getValue();
+        $result = $fraction->getSimplifiedValue();
 
         // THEN
         self::assertSame($expectedResult, $result);
@@ -178,6 +178,16 @@ class FirstTest extends TestCase
                 'numerator' => 6,
                 'denominator' => 8,
                 'expectedResult' => "3/4",
+            ],
+            [
+                'numerator' => 8,
+                'denominator' => 6,
+                'expectedResult' => "4/3",
+            ],
+            [
+                'numerator' => 8,
+                'denominator' => -6,
+                'expectedResult' => "-4/3",
             ],
         ];
     }
