@@ -9,3 +9,4 @@ sh:
 
 test:
 	docker exec containerfractions sh -c "php -d memory_limit=512M ./vendor/bin/phpunit"
+
