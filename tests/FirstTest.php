@@ -5,23 +5,27 @@ use PHPUnit\Framework\TestCase;
 
 class FirstTest extends TestCase
 {
-    private Fraction $sut;
+//    private Fraction $sut;
 
-    protected function setUp(): void
-    {
-        $this->sut = new Fraction();
-    }
 
-    /** @test */
-    public function it_should_return_4_when_numerator_is_4()
+    /**
+     * @test
+     * @dataProvider integerNumberPositiveProvider
+     */
+    public function fraction_returns_the_given_positive_number($number): void
     {
         // GIVEN
-        $num = 4;
+        $fraction = new Fraction($number);
 
         // WHEN
-        $result = $this->sut->getValue();
+        $result = $fraction->getValue();
 
         // THEN
-        self::assertSame($num, $result);
+        self::assertSame($number, $result);
+    }
+
+    public static function integerNumberPositiveProvider(): array
+    {
+        return array_map(fn($number) => [$number], range(1, 3));
     }
 }
