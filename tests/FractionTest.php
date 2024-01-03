@@ -126,7 +126,7 @@ class FractionTest extends TestCase
      * @test
      * @dataProvider fractionProvider
      */
-    public function fraction_should_be_simplify_to_its_simplest_form_when_numerator_and_denominator_have_common_factors(
+    public function fraction_should_be_simplified_to_its_simplest_form_when_numerator_and_denominator_have_common_factors(
         int $numerator,
         int $denominator,
         string $expectedResult
