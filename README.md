@@ -5,7 +5,7 @@ Le kata "Fractions" consiste à développer la représentation et la manipulatio
 
 ## Fonctionnalités
 
-- Création d'une fraction et affichage
+- Création d'une fraction
 - Addition
 - Soustraction
 - Multiplication
