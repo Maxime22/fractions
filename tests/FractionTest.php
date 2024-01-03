@@ -3,23 +3,36 @@
 use App\Fraction;
 use PHPUnit\Framework\TestCase;
 
-class FirstTest extends TestCase
+class FractionTest extends TestCase
 {
+    /** @test */
+    public function fraction_returns_0_when_numerator_is_1(): void
+    {
+        // GIVEN
+        $numerator = 0;
+        $fraction = new Fraction($numerator, 4);
+
+        // WHEN
+        $result = $fraction->getFractionValue();
+
+        // THEN
+        self::assertSame('0', $result);
+    }
 
     /**
      * @test
      * @dataProvider integerNumberPositiveProvider
      */
-    public function fraction_returns_the_given_positive_number($number): void
+    public function fraction_returns_the_given_positive_number_when_denominator_is_1($number): void
     {
         // GIVEN
-        $fraction = new Fraction($number);
+        $fraction = new Fraction($number, 1);
 
         // WHEN
-        $result = $fraction->getSimplifiedValue();
+        $result = $fraction->getFractionValue();
 
         // THEN
-        self::assertEquals($number, $result);
+        self::assertSame((string)$number, $result);
     }
 
     public static function integerNumberPositiveProvider(): array
@@ -27,10 +40,9 @@ class FirstTest extends TestCase
         return array_map(fn($number) => [$number], range(0, 3));
     }
 
-    /**
-     * @test
-     */
-    public function fraction_with_a_numerator_and_a_denominator_should_return_both(): void
+    /** @test */
+    public function fraction_returns_the_fraction_value_with_the_fraction_slash_given_a_denominator_greater_than_1(
+    ): void
     {
         // GIVEN
         $numerator = 3;
@@ -38,61 +50,7 @@ class FirstTest extends TestCase
         $fraction = new Fraction($numerator, $denominator);
 
         // WHEN
-        $result = $fraction->getSimplifiedValue();
-
-        // THEN
-        $expectedResult = "3/4";
-        self::assertSame($expectedResult, $result);
-    }
-
-    /**
-     * @test
-     */
-    public function fraction_with_negative_numerator_and_positive_denominator_should_return_negative_result(): void
-    {
-        // GIVEN
-        $numerator = -3;
-        $denominator = 4;
-        $fraction = new Fraction($numerator, $denominator);
-
-        // WHEN
-        $result = $fraction->getSimplifiedValue();
-
-        // THEN
-        $expectedResult = "-3/4";
-        self::assertSame($expectedResult, $result);
-    }
-
-    /**
-     * @test
-     */
-    public function fraction_with_positive_numerator_and_negative_denominator_should_return_negative_result(): void
-    {
-        // GIVEN
-        $numerator = 3;
-        $denominator = -4;
-        $fraction = new Fraction($numerator, $denominator);
-
-        // WHEN
-        $result = $fraction->getSimplifiedValue();
-
-        // THEN
-        $expectedResult = "-3/4";
-        self::assertSame($expectedResult, $result);
-    }
-
-    /**
-     * @test
-     */
-    public function fraction_with_negative_numerator_and_negative_denominator_should_return_positive_result(): void
-    {
-        // GIVEN
-        $numerator = -3;
-        $denominator = -4;
-        $fraction = new Fraction($numerator, $denominator);
-
-        // WHEN
-        $result = $fraction->getSimplifiedValue();
+        $result = $fraction->getFractionValue();
 
         // THEN
         $expectedResult = "3/4";
@@ -100,62 +58,84 @@ class FirstTest extends TestCase
     }
 
     /** @test */
-    public function fraction_with_denominator_1_should_return_the_numerator_value(): void
+    public function fraction_with_negative_numerator_and_positive_denominator_should_return_negative_fraction_result(
+    ): void
     {
         // GIVEN
-        $numerator = 2;
-        $denominator = 1;
+        $numerator = -3;
+        $denominator = 4;
         $fraction = new Fraction($numerator, $denominator);
 
         // WHEN
-        $result = $fraction->getSimplifiedValue();
+        $result = $fraction->getFractionValue();
 
         // THEN
-        $expectedResult = "2";
+        $expectedResult = "-3/4";
+        self::assertSame($expectedResult, $result);
+    }
+
+    /** @test */
+    public function fraction_with_positive_numerator_and_negative_denominator_should_return_negative_fraction_result(
+    ): void
+    {
+        // GIVEN
+        $numerator = 3;
+        $denominator = -4;
+        $fraction = new Fraction($numerator, $denominator);
+
+        // WHEN
+        $result = $fraction->getFractionValue();
+
+        // THEN
+        $expectedResult = "-3/4";
+        self::assertSame($expectedResult, $result);
+    }
+
+    /** @test */
+    public function fraction_with_negative_numerator_and_negative_denominator_should_return_positive_fraction_result(
+    ): void
+    {
+        // GIVEN
+        $numerator = -3;
+        $denominator = -4;
+        $fraction = new Fraction($numerator, $denominator);
+
+        // WHEN
+        $result = $fraction->getFractionValue();
+
+        // THEN
+        $expectedResult = "3/4";
         self::assertSame($expectedResult, $result);
     }
 
     /** @test */
     public function fraction_should_return_an_exception_when_denominator_is_0(): void
     {
+        // THEN
         $this->expectException(\Exception::class);
 
         // GIVEN
-        $numerator = 2;
-        $denominator = 0;
-        $fraction = new Fraction($numerator, $denominator);
+        $anyNumber = 2;
+        $zero = 0;
 
         // WHEN
-        $result = $fraction->getSimplifiedValue();
-    }
-
-    /** @test */
-    public function fraction_should_return_2_given_numerator_4_and_denominator_2(): void
-    {
-        // GIVEN
-        $numerator = 4;
-        $denominator = 2;
-        $fraction = new Fraction($numerator, $denominator);
-
-        // WHEN
-        $result = $fraction->getSimplifiedValue();
-
-        // THEN
-        $expectedResult = "2";
-        self::assertSame($expectedResult, $result);
+        new Fraction($anyNumber, $zero);
     }
 
     /**
      * @test
      * @dataProvider fractionProvider
      */
-    public function fraction_should_be_simplified_to_its_minimum_value($numerator, $denominator, $expectedResult): void
-    {
+    public function fraction_should_be_simplify_to_its_simplest_form_when_numerator_and_denominator_have_common_factors(
+        int $numerator,
+        int $denominator,
+        string $expectedResult
+    ): void {
         // GIVEN
         $fraction = new Fraction($numerator, $denominator);
 
         // WHEN
-        $result = $fraction->getSimplifiedValue();
+        $result = $fraction->getFractionValue();
 
         // THEN
         self::assertSame($expectedResult, $result);
@@ -187,6 +167,11 @@ class FirstTest extends TestCase
             [
                 'numerator' => 8,
                 'denominator' => -6,
+                'expectedResult' => "-4/3",
+            ],
+            [
+                'numerator' => -8,
+                'denominator' => 6,
                 'expectedResult' => "-4/3",
             ],
         ];
