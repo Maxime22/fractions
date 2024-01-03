@@ -24,3 +24,5 @@ Le kata "Fractions" consiste à développer la représentation et la manipulatio
 ## Tests
 - `make test`
 
+## Sources
+- https://www.dunod.com/sciences-techniques/software-craft-tdd-clean-code-et-autres-pratiques-essentielles
